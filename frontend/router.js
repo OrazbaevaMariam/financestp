@@ -9,7 +9,7 @@ import {OperationsExpenseCreate} from "./src/components/operations/operations-ex
 import {OperationsUpdate} from "./src/components/operations/operations-update";
 import {Dashboard} from "./src/components/dashboard";
 import {Login} from "./src/components/auth/login";
-import {SignUp} from "./src/components/auth/sign-up";
+import {Form} from "./src/components/auth/form";
 import {Logout} from "./src/components/auth/logout";
 import {FileUtils} from "./src/utils/file-utils";
 import {AuthUtils} from "./src/utils/auth-utils";
@@ -54,12 +54,11 @@ export class Router {
                 filePathTemplate: '/templates/pages/auth/login.html',
                 useLayout: false,
                 load: () => {
-                    // document.body.classList.add('login-page');
                     document.body.style.height = '100vh';
                     new Login(this.openNewRoute.bind(this));
+                    new Form('login');
                 },
                 unload: () => {
-                    // document.body.classList.remove('login-page');
                     document.body.style.height = 'auto';
                 },
             },
@@ -69,12 +68,11 @@ export class Router {
                 filePathTemplate: '/templates/pages/auth/sign-up.html',
                 useLayout: false,
                 load: () => {
-                    // document.body.classList.add('register-page');
                     document.body.style.height = '100vh';
-                    new SignUp(this.openNewRoute.bind(this));
+                    new Form(this.openNewRoute.bind(this));
+                    new Form('signup');
                 },
                 unload: () => {
-                    // document.body.classList.remove('register-page');
                     document.body.style.height = 'auto';
                 },
             },
