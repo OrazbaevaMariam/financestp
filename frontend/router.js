@@ -8,7 +8,6 @@ import {OperationsList} from "./src/components/operations/operations-show";
 import {OperationsExpenseCreate} from "./src/components/operations/operations-expense-create";
 import {OperationsUpdate} from "./src/components/operations/operations-update";
 import {Dashboard} from "./src/components/dashboard";
-import {Login} from "./src/components/auth/login";
 import {Form} from "./src/components/auth/form";
 import {Logout} from "./src/components/auth/logout";
 import {FileUtils} from "./src/utils/file-utils";
@@ -17,7 +16,6 @@ import {ExpenseDelete} from "./src/components/expense/expense-delete";
 import {IncomeDelete} from "./src/components/income/income-delete";
 import {Sidebar} from "./src/components/sidebar";
 import {OperationsIncomeCreate} from "./src/components/operations/operations-income-create";
-import {OperationsService} from "./src/services/operations-service";
 import {OperationsDelete} from "./src/components/operations/operations-delete";
 
 export class Router {
@@ -55,7 +53,7 @@ export class Router {
                 useLayout: false,
                 load: () => {
                     document.body.style.height = '100vh';
-                    new Login(this.openNewRoute.bind(this));
+                    new Form(this.openNewRoute.bind(this));
                     new Form('login');
                 },
                 unload: () => {
@@ -244,20 +242,31 @@ export class Router {
 
     async openRoute() {
 
-        const urlRoute = window.location.hash.split('?')[0];
-        if (urlRoute === '#/logout') {
+        // const urlRoute = window.location.hash.split('?')[0];
+
+        // const urlRoute = window.location.hash.substring(2);
+        const urlRoute = window.location.hash.slice(1);
+        console.log(urlRoute)
+
+        if (urlRoute === '/logout') {
+            // console.log(urlRoute)
             await AuthUtils.logout();
-            window.location.href = '#/';
+            window.location.href = '/';
             return;
         }
         const newRoute = this.routes.find(item => {
-            return item.route === urlRoute;
-        });
+            // console.log(item.route)
 
-        if (!newRoute) {
-            window.location.href = '#/';
-            return;
-        }
+            // console.log(item.route === urlRoute)
+
+
+        });
+        console.log(newRoute);
+
+        // if (!newRoute) {
+        //     window.location.href = '/';
+        //     return;
+        // }
 
         newRoute.load();
 

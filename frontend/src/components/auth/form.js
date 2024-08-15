@@ -60,10 +60,12 @@ export class Form {
             }
         });
 
-        this.processElement = document.getElementById('process');
-        this.processElement.onclick = function () {
-            that.processForm();
-        };
+        this.processElement = document.getElementById('process-button"');
+        if ( this.processElement){
+            this.processElement.onclick = function () {
+                that.processForm();
+            };
+        }
 
         // if (this.page === 'signup') {
         //     this.agreeElement = document.getElementById('agree');
@@ -92,14 +94,17 @@ export class Form {
     }
 
     validateForm() {
-        const validForm = this.fields.every(item => item.valid);
-        const isValid = this.agreeElement ? this.agreeElement.checked && validForm : validForm;
-        if (isValid) {
-            this.processElement.removeAttribute('disabled');
-        } else {
-            this.processElement.setAttribute('disabled', 'disabled');
-        }
-        return isValid;
+        window.addEventListener('load', function() {
+            const validForm = this.fields.every(item => item.valid);
+            const isValid = this.agreeElement ? this.agreeElement.checked && validForm : validForm;
+            if (isValid) {
+                this.processElement.removeAttribute('disabled');
+            } else {
+                this.processElement.setAttribute('disabled', 'disabled');
+            }
+            return isValid;
+        });
+
     }
 
     async processForm() {
