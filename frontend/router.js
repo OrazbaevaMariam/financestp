@@ -246,7 +246,6 @@ export class Router {
 
         // const urlRoute = window.location.hash.substring(2);
         const urlRoute = window.location.hash.slice(1);
-        console.log(urlRoute)
 
         if (urlRoute === '/logout') {
             // console.log(urlRoute)
