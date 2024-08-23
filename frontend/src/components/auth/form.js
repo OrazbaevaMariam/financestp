@@ -60,7 +60,7 @@ export class Form {
             }
         });
 
-        this.processElement = document.getElementById('process-button"');
+        this.processElement = document.getElementById('process-button');
         if ( this.processElement){
             this.processElement.onclick = function () {
                 that.processForm();
