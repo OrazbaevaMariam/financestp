@@ -1,8 +1,8 @@
 import {IncomeService} from "../../services/income-service";
 
 export class OperationsDelete {
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    currentId;
+    constructor() {
     }
 
 
@@ -14,7 +14,8 @@ export class OperationsDelete {
 
         if (response.error){
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? location.href = "/" : null;
+            // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
 
         // return this.openNewRoute('/income');

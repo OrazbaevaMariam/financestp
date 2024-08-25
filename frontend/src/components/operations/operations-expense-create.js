@@ -4,8 +4,8 @@ import {OperationsService} from "../../services/operations-service";
 
 export class OperationsExpenseCreate {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
 
         // document.getElementById('createExpenseButton').addEventListener('click', this.saveOrder.bind(this));
         //

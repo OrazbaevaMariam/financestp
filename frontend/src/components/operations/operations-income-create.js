@@ -5,8 +5,8 @@ import {OperationsService} from "../../services/operations-service";
 
 export class OperationsIncomeCreate {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
 
         document.getElementById('createIncomeButton').addEventListener('click', this.saveIncome.bind(this));
         document.getElementById('cancelIncomeButton').addEventListener('click', this.cancelIncome.bind(this));

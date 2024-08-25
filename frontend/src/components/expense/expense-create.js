@@ -2,8 +2,7 @@ import {ExpenseService} from "../../services/expense-service";
 
 export class ExpenseCreate {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
 
         document.getElementById('saveExpenseButton').addEventListener('click', this.saveCategory.bind(this));
         document.getElementById('cancelButton').addEventListener('click', this.cancelCategory.bind(this));

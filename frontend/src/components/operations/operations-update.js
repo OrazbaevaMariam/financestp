@@ -8,11 +8,11 @@ export class OperationsUpdate {
 
     type
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
         const id = UrlUtils.getUrlParam('id');
         if (!id) {
-            return this.openNewRoute('/');
+            location.href = "/";
         }
         this.operationData = null;
         this.categoryExpense = null;

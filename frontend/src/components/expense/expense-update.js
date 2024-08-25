@@ -4,11 +4,10 @@ import {UrlUtils} from "../../utils/url-utils";
 
 export class ExpenseUpdate {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
         const id = UrlUtils.getUrlParam('id');
         if (!id) {
-            return this.openNewRoute('/');
+             location.href = "/";
         }
         this.categoryExpense = null;
 

@@ -2,8 +2,8 @@ import {IncomeService} from "../../services/income-service";
 
 export class IncomeCreate {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
 
         document.getElementById('saveIncomeButton').addEventListener('click', this.saveCategory.bind(this));
         document.getElementById('cancelButton').addEventListener('click', this.cancelCategory.bind(this));

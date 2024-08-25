@@ -4,8 +4,7 @@ import {HttpUtils} from "../utils/http-utils";
 import {OperationsService} from "../services/operations-service";
 
 export class Dashboard {
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
         this.categoriesIncome = null;
         this.operations = null;
         this.dataIncomes = null;

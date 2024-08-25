@@ -5,11 +5,11 @@ import {IncomeService} from "../../services/income-service";
 export class IncomeShow {
 
     currentId = null;
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
         const id = UrlUtils.getUrlParam('id');
         // if (!id) {
-        //     return this.openNewRoute('/');
+        //     location.href = "/";
         // }
         this.categoriesIncome = null;
         this.incomeCategoryTitle = document.getElementById('incomeCategoryTitle');

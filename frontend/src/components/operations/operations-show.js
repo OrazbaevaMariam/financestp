@@ -7,8 +7,8 @@ export class OperationsList {
     // currentIdEdit = null;
 
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
         this.operations = null;
         this.tableBody = document.getElementById('table-body');
         const operationDeleteButton = document.getElementById('operationDeleteButton');

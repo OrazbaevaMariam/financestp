@@ -108,6 +108,14 @@ export class Form {
     }
 
     async processForm() {
+
+        window.addEventListener("load", function (event) {
+            document.body.style.height = '100vh';
+        });
+        window.addEventListener('unload', function () {
+            document.body.style.height = 'auto';
+        });
+
         if (this.validateForm()) {
             const email = this.fields.find(item => item.name === 'email').element.value;
             const password = this.fields.find(item => item.name === 'password').element.value;

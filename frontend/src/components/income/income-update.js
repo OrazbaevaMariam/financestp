@@ -4,11 +4,11 @@ import {IncomeService} from "../../services/income-service";
 
 export class IncomeUpdate {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
         const id = UrlUtils.getUrlParam('id');
         if (!id) {
-            return this.openNewRoute('/');
+            location.href = "/";
         }
         this.categoryIncome = null;
 

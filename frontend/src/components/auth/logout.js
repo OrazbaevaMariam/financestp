@@ -4,11 +4,10 @@ import {AuthService} from "../../services/auth-service.js";
 
 export class Logout {
 
-     constructor(openNewRoute) {
-          this.openNewRoute = openNewRoute;
+     constructor() {
 
           if (!AuthUtils.getAuthInfo(AuthUtils.accessTokenKey) || !AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey)) {
-               return this.openNewRoute('/login');
+              location.href = "/login";
           }
           this.logout().then();
      }
@@ -20,6 +19,6 @@ export class Logout {
 
           AuthUtils.removeAuthInfo();
 
-          this.openNewRoute('/login');
+          location.href = "/login";
      }
 }

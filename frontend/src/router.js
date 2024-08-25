@@ -17,6 +17,7 @@ import {IncomeDelete} from "./components/income/income-delete";
 import {Sidebar} from "./components/sidebar";
 import {OperationsIncomeCreate} from "./components/operations/operations-income-create";
 import {OperationsDelete} from "./components/operations/operations-delete";
+import {UserInfo} from "./utils/user-info";
 
 export class Router {
     constructor() {
@@ -39,50 +40,43 @@ export class Router {
                 template: '/templates/pages/dashboard.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Dashboard(this.openNewRoute.bind(this));
+                    new Dashboard();
                 },
-                scripts: [],
-                styles: []
             },
             {
                 route: '/404',
                 title: 'Страница не найдена',
                 template: '/templates/pages/404.html',
-                useLayout: false,
 
             },
             {
                 route: '/login',
                 title: 'Авторизация',
                 template: '/templates/pages/auth/login.html',
-                useLayout: false,
                 load: () => {
-                    document.body.style.height = '100vh';
-                    // new Form(this.openNewRoute.bind(this));
+                    // document.body.style.height = '100vh';
                     new Form('login');
                 },
-                unload: () => {
-                    document.body.style.height = 'auto';
-                },
+                // unload: () => {
+                //     document.body.style.height = 'auto';
+                // },
             },
             {
                 route: '/sign-up',
                 title: 'Регистрация',
                 template: '/templates/pages/auth/sign-up.html',
-                useLayout: false,
                 load: () => {
-                    document.body.style.height = '100vh';
-                    // new Form(this.openNewRoute.bind(this));
+                    // document.body.style.height = '100vh';
                     new Form('signup');
                 },
-                unload: () => {
-                    document.body.style.height = 'auto';
-                },
+                // unload: () => {
+                //     document.body.style.height = 'auto';
+                // },
             },
             {
                 route: '/logout',
                 load: () => {
-                    new Logout(this.openNewRoute.bind(this));
+                    new Logout();
 
                 }
             },
@@ -92,9 +86,8 @@ export class Router {
                 template: '/templates/pages/expense/show-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ShowExpense(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new Expenses();
+                    new ShowExpense();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
             },
@@ -104,7 +97,7 @@ export class Router {
                 template: '/templates/pages/expense/create-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ExpenseCreate(this.openNewRoute.bind(this));
+                    new ExpenseCreate();
                 },
 
             },
@@ -114,17 +107,16 @@ export class Router {
                 template: '/templates/pages/expense/update-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new ExpenseUpdate(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new EditExpenses();
+                    new ExpenseUpdate();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
-                scripts: []
+
             },
             {
                 route: '/expense/delete',
                 load: () => {
-                    new ExpenseDelete(this.openNewRoute.bind(this));
+                    new ExpenseDelete();
                 },
 
             },
@@ -134,9 +126,9 @@ export class Router {
                 template: '/templates/pages/income/show-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeShow(this.openNewRoute.bind(this));
+                    new IncomeShow();
                 },
-                scripts: []
+
             },
             {
                 route: '/income/create',
@@ -144,9 +136,8 @@ export class Router {
                 template: '/templates/pages/income/create-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeCreate(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new CreateRevenue();
+                    new IncomeCreate();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
                 scripts: []
@@ -157,9 +148,8 @@ export class Router {
                 template: '/templates/pages/income/update-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeUpdate(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new EditRevenue();
+                    new IncomeUpdate();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
                 scripts: []
@@ -168,7 +158,7 @@ export class Router {
             {
                 route: '/income/delete',
                 load: () => {
-                    new IncomeDelete(this.openNewRoute.bind(this));
+                    new IncomeDelete();
                 },
 
             },
@@ -178,9 +168,8 @@ export class Router {
                 template: '/templates/pages/operations/show-operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsList(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new RevenueExpenses();
+                    new OperationsList();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
             },
@@ -190,13 +179,11 @@ export class Router {
                 template: '/templates/pages/operations/create-operations-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsIncomeCreate(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new CreateRevenueExpenses();
+                    new OperationsIncomeCreate();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
-                scripts: [],
-                styles: []
+
             },
             {
                 route: '/operations/create/expense',
@@ -204,13 +191,11 @@ export class Router {
                 template: '/templates/pages/operations/create-operations-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsExpenseCreate(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new CreateRevenueExpenses();
+                    new OperationsExpenseCreate();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
-                scripts: [],
-                styles: []
+
             },
             {
                 route: '/operations/edit',
@@ -218,18 +203,16 @@ export class Router {
                 template: '/templates/pages/operations/update-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new OperationsUpdate(this.openNewRoute.bind(this));
-                    // new UserInfo();
-                    // new EditRevenueExpenses();
+                    new OperationsUpdate();
+                    new UserInfo();
                     this.handleActiveLink();
                 },
-                scripts: [],
-                styles: []
+
             },
             {
                 route: '/operations/delete',
                 load: () => {
-                    new OperationsDelete(this.openNewRoute.bind(this));
+                    new OperationsDelete();
                 },
 
             },

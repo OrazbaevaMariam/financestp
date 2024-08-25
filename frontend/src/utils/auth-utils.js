@@ -1,4 +1,5 @@
 import config from "../config/config";
+import {AuthService} from "../services/auth-service";
 export class AuthUtils {
     static accessTokenKey = 'accessToken';
     static refreshTokenKey = 'refreshToken';
@@ -73,6 +74,14 @@ export class AuthUtils {
             }
         }
     }
+    static getUserInfo(){
+        const userInfo = localStorage.getItem(this.userInfoTokenKey);
+        if(userInfo) {
+            return JSON.parse(userInfo);
+        }
+
+        return null;
+    }
     static async logout() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
         if (refreshToken) {
@@ -89,7 +98,7 @@ export class AuthUtils {
                 const result = await response.json();
                 if (result && !result.error) {
                     AuthUtils.removeTokens();
-                    localStorage.removeItem(Auth.userInfoTokenKey);
+                    localStorage.removeItem(AuthUtils.userInfoTokenKey);
                     return true;
                 }
             }

@@ -7,7 +7,7 @@ export class ExpenseDelete {
         this.openNewRoute = openNewRoute;
         const id = UrlUtils.getUrlParam('id');
         if (!id) {
-            return this.openNewRoute('/');
+            location.href = "/";
         }
         document.getElementById('expenseCategoryDelete').addEventListener('click', this.deleteExpense.bind(this));
 

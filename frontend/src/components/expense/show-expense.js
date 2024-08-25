@@ -5,8 +5,7 @@ import {UrlUtils} from "../../utils/url-utils";
 export class ShowExpense {
     currentId = null;
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
         const id = UrlUtils.getUrlParam('id');
 
         this.categoriesExpense = null;

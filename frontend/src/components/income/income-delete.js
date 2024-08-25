@@ -3,11 +3,11 @@ import {IncomeService} from "../../services/income-service";
 
 export class IncomeDelete {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
         const id = UrlUtils.getUrlParam('id');
         if (!id) {
-            return this.openNewRoute('/');
+            location.href = "/";
         }
         document.getElementById('incomeCategoryDelete').addEventListener('click', this.deleteIncome.bind(this));
 
@@ -22,8 +22,8 @@ export class IncomeDelete {
             alert(response.error);
             return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
+        location.href = "income/";
 
-        return this.openNewRoute('/income');
 
     }
 }
