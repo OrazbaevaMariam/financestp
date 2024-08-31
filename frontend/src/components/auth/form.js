@@ -11,7 +11,7 @@ export class Form {
 
         const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
         if (accessToken) {
-            location.href = '/main?period=today';
+            location.href = '/main';
             return;
         }
         this.fields = [
@@ -61,7 +61,7 @@ export class Form {
         });
 
         this.processElement = document.getElementById('process-button');
-        if ( this.processElement){
+        if (this.processElement){
             this.processElement.onclick = function () {
                 that.processForm();
             };
@@ -102,7 +102,8 @@ export class Form {
             } else {
                 this.processElement.setAttribute('disabled', 'disabled');
             }
-            return isValid;
+            // return isValid;
+            return validForm;
         });
 
     }
@@ -122,7 +123,6 @@ export class Form {
             let rememberMe = false;
 
             if (this.page === 'signup') {
-
 
                     const fullName = this.fields.find(item => item.name === 'name').element.value;
                     const fullNameArr = fullName.split(' ').filter(elem => elem);
@@ -158,7 +158,7 @@ export class Form {
             }
 
             try {
-                debugger
+
                 const result = await HttpUtils.request(config.host + '/login', 'POST', true, {
                     email: email,
                     password: password,
@@ -167,20 +167,22 @@ export class Form {
 
                 if (result) {
                     if (result.error ||
-                        !result.accessToken ||
-                        !result.refreshToken ||
+                        !result.tokens.accessToken ||
+                        !result.tokens.refreshToken ||
                         !result.user.lastName ||
                         !result.user.name ||
                         !result.user.id) {
                         throw new Error(result.message);
                     }
-                    AuthUtils.setTokens(result.accessToken, result.refreshToken);
+                    AuthUtils.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
                     AuthUtils.setUserInfo({
+                        // fullName: result.user.fullName,
                         name: result.user.name,
                         lastName: result.user.lastName,
                         userId: result.user.id,
+                        email: email
                     });
-                    location.href = '/main?period=today';
+                    location.href = '/';
                 }
             } catch (error) {
                 return console.log(error.message)
