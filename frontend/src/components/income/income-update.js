@@ -34,7 +34,7 @@ export class IncomeUpdate {
         this.incomeInputElement.setAttribute('value', result.response.title)
 
         if (result.redirect) {
-            return this.openNewRoute(result.redirect);
+            return window.location.href = result.redirect;
         }
 
         if (result.error || !result.response || (result.response && result.response.error)) {
@@ -71,10 +71,10 @@ export class IncomeUpdate {
         if (response.error) {
             console.log('error', response.error)
             // alert(response.error);
-            // return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? window.location.href = response.redirect : null;
         }
+        return window.location.href = '/income';
 
-        return this.openNewRoute('/income')
 
 
     }

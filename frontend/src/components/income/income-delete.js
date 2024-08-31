@@ -20,9 +20,10 @@ export class IncomeDelete {
 // console.log(response)
         if (response.error) {
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? window.location.href = response.redirect : null;
         }
-        location.href = "income/";
+        return window.location.href = '/income';
+
 
 
     }

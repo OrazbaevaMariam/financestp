@@ -3,8 +3,8 @@ import {ExpenseService} from "../../services/expense-service";
 
 export class ExpenseDelete {
 
-    constructor(openNewRoute) {
-        this.openNewRoute = openNewRoute;
+    constructor() {
+
         const id = UrlUtils.getUrlParam('id');
         if (!id) {
             location.href = "/";
@@ -21,10 +21,10 @@ export class ExpenseDelete {
 
         if (response.error){
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ?  window.location.href = response.redirect : null;
         }
+        return window.location.href = '/expense';
 
-        return this.openNewRoute('/expense');
 
     }
 }

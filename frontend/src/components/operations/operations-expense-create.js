@@ -70,10 +70,10 @@ export class OperationsExpenseCreate {
 
         if (response.error) {
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? window.location.href = response.redirect : null;
         }
-
-        return this.openNewRoute('/operations');
+        return window.location.href = '/operations';
+        // return this.openNewRoute('/operations');
 
         // this.incomeCreateISelectCategoryElement.value = ;
 
@@ -100,8 +100,8 @@ export class OperationsExpenseCreate {
     }
     async cancelExpense(e) {
         e.preventDefault();
+        return window.location.href = '/operations';
 
-        return this.openNewRoute('/operations');
     };
 
 

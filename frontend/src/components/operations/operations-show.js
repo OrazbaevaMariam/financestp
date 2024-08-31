@@ -264,10 +264,10 @@ export class OperationsList {
 
         if (response.error){
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? window.location.href = response.redirect : null;
+            // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
-
-        return this.openNewRoute('/operations');
+        return window.location.href = '/operations';
     }
 
 }

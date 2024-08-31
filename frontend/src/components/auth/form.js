@@ -11,7 +11,7 @@ export class Form {
 
         const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
         if (accessToken) {
-            location.href = '/main';
+            location.href = '/?period=today';
             return;
         }
         this.fields = [

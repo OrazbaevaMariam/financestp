@@ -29,7 +29,7 @@ export class AuthUtils {
         }
 
         this.removeTokens();
-        location.href = '#/';
+        location.href = '/';
         return false;
     };
 

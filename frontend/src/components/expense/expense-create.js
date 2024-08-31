@@ -26,15 +26,15 @@ export class ExpenseCreate {
 
         if (response.error) {
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ?   window.location.href = response.redirect : null;
         }
+        return window.location.href = '/expense';
 
-        return this.openNewRoute('/expense');
     };
     async cancelCategory(e) {
         e.preventDefault();
+        return window.location.href = '/expense';
 
-        return this.openNewRoute('/expense');
     };
 
 

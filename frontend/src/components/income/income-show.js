@@ -100,9 +100,9 @@ export class IncomeShow {
 
         if (response.error){
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? window.location.href = response.redirect : null;
         }
+       return window.location.href = '/income';
 
-        // return this.openNewRoute('/income');
     }
 }

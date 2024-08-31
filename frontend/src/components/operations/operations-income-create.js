@@ -69,10 +69,10 @@ export class OperationsIncomeCreate {
 
         if (response.error) {
             alert(response.error);
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
+            return response.redirect ? window.location.href = response.redirect : null;
         }
+        return window.location.href = '/operations';
 
-        return this.openNewRoute('/operations');
 
         // this.incomeCreateSelectCategoryElement.value = ;
 
@@ -99,8 +99,8 @@ export class OperationsIncomeCreate {
     }
     async cancelIncome(e) {
         e.preventDefault();
+        return window.location.href = '/operations';
 
-        return this.openNewRoute('/operations');
     };
 
 

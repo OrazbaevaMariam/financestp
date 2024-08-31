@@ -113,7 +113,7 @@ export class Router {
                 template: '/templates/pages/expense/update-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CheckAccessToken();
+                    // new CheckAccessToken();
                     new ExpenseUpdate();
                     new UserInfo();
                     this.handleActiveLink();

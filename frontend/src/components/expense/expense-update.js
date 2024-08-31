@@ -33,7 +33,7 @@ export class ExpenseUpdate {
         this.expenseInputElement.setAttribute('value', result.response.title)
 
         if (result.redirect) {
-            return this.openNewRoute(result.redirect);
+            return  window.location.href = result.redirect;
         }
 
         if (result.error || !result.response || (result.response && result.response.error)) {
@@ -62,8 +62,8 @@ export class ExpenseUpdate {
                     alert(response.error);
                     // return response.redirect ? this.openNewRoute(response.redirect) : null;
                 }
+        return window.location.href = '/expense';
 
-                return this.openNewRoute('/expense')
 
 
     }
