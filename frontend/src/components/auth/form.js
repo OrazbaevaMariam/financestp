@@ -11,7 +11,7 @@ export class Form {
 
         const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
         if (accessToken) {
-            location.href = '#/main?period=today';
+            location.href = '/main?period=today';
             return;
         }
         this.fields = [
@@ -108,7 +108,6 @@ export class Form {
     }
 
     async processForm() {
-        debugger
 
         window.addEventListener("load", function (event) {
             document.body.style.height = '100vh';
@@ -159,6 +158,7 @@ export class Form {
             }
 
             try {
+                debugger
                 const result = await HttpUtils.request(config.host + '/login', 'POST', true, {
                     email: email,
                     password: password,
@@ -180,7 +180,7 @@ export class Form {
                         lastName: result.user.lastName,
                         userId: result.user.id,
                     });
-                    location.href = '#/main?period=today';
+                    location.href = '/main?period=today';
                 }
             } catch (error) {
                 return console.log(error.message)
