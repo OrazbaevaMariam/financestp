@@ -18,13 +18,14 @@ import {Sidebar} from "./components/sidebar";
 import {OperationsIncomeCreate} from "./components/operations/operations-income-create";
 import {OperationsDelete} from "./components/operations/operations-delete";
 import {UserInfo} from "./utils/user-info";
+import {CheckAccessToken} from "./utils/check-access-token";
 
 export class Router {
     constructor() {
 
         this.titleElement = document.getElementById('title');
         this.contentElement = document.getElementById('content');
-        this.sidebarElement = document.getElementById('main-sidebar')
+        // this.sidebarElement = document.getElementById('main-sidebar');
         // this.userName = null;
         this.profileFullNameElement = document.getElementById('profile-name');
         this.menuHref = document.querySelectorAll('a.nav-link');
@@ -40,7 +41,9 @@ export class Router {
                 template: '/templates/pages/dashboard.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new Dashboard();
+                    new UserInfo();
                 },
             },
             {
@@ -86,6 +89,7 @@ export class Router {
                 template: '/templates/pages/expense/show-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new ShowExpense();
                     new UserInfo();
                     this.handleActiveLink();
@@ -97,7 +101,9 @@ export class Router {
                 template: '/templates/pages/expense/create-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new ExpenseCreate();
+                    new UserInfo();
                 },
 
             },
@@ -107,6 +113,7 @@ export class Router {
                 template: '/templates/pages/expense/update-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new ExpenseUpdate();
                     new UserInfo();
                     this.handleActiveLink();
@@ -126,7 +133,9 @@ export class Router {
                 template: '/templates/pages/income/show-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new IncomeShow();
+                    new UserInfo();
                 },
 
             },
@@ -136,6 +145,7 @@ export class Router {
                 template: '/templates/pages/income/create-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new IncomeCreate();
                     new UserInfo();
                     this.handleActiveLink();
@@ -148,6 +158,7 @@ export class Router {
                 template: '/templates/pages/income/update-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new IncomeUpdate();
                     new UserInfo();
                     this.handleActiveLink();
@@ -168,6 +179,7 @@ export class Router {
                 template: '/templates/pages/operations/show-operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new OperationsList();
                     new UserInfo();
                     this.handleActiveLink();
@@ -179,6 +191,7 @@ export class Router {
                 template: '/templates/pages/operations/create-operations-income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new OperationsIncomeCreate();
                     new UserInfo();
                     this.handleActiveLink();
@@ -191,6 +204,7 @@ export class Router {
                 template: '/templates/pages/operations/create-operations-expense.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new OperationsExpenseCreate();
                     new UserInfo();
                     this.handleActiveLink();
@@ -203,6 +217,7 @@ export class Router {
                 template: '/templates/pages/operations/update-operation.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
+                    new CheckAccessToken();
                     new OperationsUpdate();
                     new UserInfo();
                     this.handleActiveLink();
@@ -225,7 +240,7 @@ export class Router {
         ];
     }
     async openRoute() {
-        const urlRoute = window.location.hash.split('?')[0];
+        const urlRoute = window.location.pathname;
         if (urlRoute === '/logout') {
             await AuthUtils.logout();
             window.location.href = '/login';
@@ -241,19 +256,30 @@ export class Router {
             return
         }
 
-        this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
+        if (urlRoute !== '/login' && urlRoute !== '/sign-up' && urlRoute !== '/404'){
+            this.contentElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
+            const contentLayoutElement = document.getElementById('content-layout');
+            contentLayoutElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
+        } else {
+            this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
+
+        }
+
         // this.stylesElement.setAttribute('href', newRoute.styles);
         this.titleElement.innerText = newRoute.title;
 
-        const userInfo = AuthUtils.getAuthInfo();
-        const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
+        // if (!this.sidebarElement){
+        //     this.sidebarElement = document.getElementById('main-sidebar')
+        // }
 
-        if (userInfo && accessToken) {
-            this.profileFullNameElement.innerText = userInfo.fullName;
-            this.sidebarElement.style.display = 'flex';
-        } else {
-            this.sidebarElement.style.display = 'none';
-        }
+        // const userInfo = AuthUtils.getAuthInfo();
+        // const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
+        //
+        // if (userInfo && accessToken) {
+        //     this.sidebarElement.style.display = 'flex';
+        // } else {
+        //     this.sidebarElement.style.display = 'none';
+        // }
 
         newRoute.load();
     }
@@ -416,7 +442,7 @@ export class Router {
     }
 
     handleActiveLink() {
-        const currentPath = window.location.hash;
+        const currentPath = window.location.pathname;
         this.menuHref.forEach(link => {
             link.getAttribute('href') === currentPath ?
                 link.classList.add('active') :

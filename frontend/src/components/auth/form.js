@@ -108,6 +108,7 @@ export class Form {
     }
 
     async processForm() {
+        debugger
 
         window.addEventListener("load", function (event) {
             document.body.style.height = '100vh';
@@ -122,6 +123,7 @@ export class Form {
             let rememberMe = false;
 
             if (this.page === 'signup') {
+
 
                     const fullName = this.fields.find(item => item.name === 'name').element.value;
                     const fullNameArr = fullName.split(' ').filter(elem => elem);
