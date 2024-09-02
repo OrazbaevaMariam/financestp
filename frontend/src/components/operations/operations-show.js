@@ -267,7 +267,7 @@ export class OperationsList {
             return response.redirect ? window.location.href = response.redirect : null;
             // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
-        return window.location.href = '/operations';
+        // return window.location.href = '/operations';
     }
 
 }

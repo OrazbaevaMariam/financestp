@@ -14,18 +14,18 @@ export class UserInfo {
     }
 
     getUserInfo() {
-        this.userInfo && this.accessToken ? this.fullName.innerText = this.userInfo.fullName : this.fullName.innerText = 'Нет данных';
+        this.userInfo && this.accessToken ? this.fullName.innerText = this.userInfo.name + ' ' + this.userInfo.lastName : this.fullName.innerText = 'Нет данных';
     }
 
     async getBalance() {
         try {
 
-            const result = await HttpUtils.request(config.host + '/balance');
+            const result = await HttpUtils.request('/balance');
             if (result) {
                 if (result.error) {
                     throw new Error(result.error)
                 }
-                this.balance.innerText = result.balance;
+                this.balance.innerText = result.response.balance;
             }
 
         } catch (error) {

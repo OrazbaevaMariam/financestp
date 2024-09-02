@@ -9,13 +9,16 @@ export class Dashboard {
         this.operations = null;
         this.dataIncomes = null;
 
-        const weekFilter = document.getElementById('weekFilter');
-        const monthFilter = document.getElementById('monthFilter');
-        const yearFilter = document.getElementById('yearFilter');
-        const allDatesFilter = document.getElementById('allDatesFilter');
-        const intervalFilter = document.getElementById('intervalFilter');
+        const todayFilter = document.getElementById('today-filter');
+        const weekFilter = document.getElementById('week-filter');
+        const monthFilter = document.getElementById('month-filter');
+        const yearFilter = document.getElementById('year-filter');
+        const allDatesFilter = document.getElementById('all-dates-filter');
+        const intervalFilter = document.getElementById('interval-filter');
         this.dateStart = document.getElementById('date-start');
         this.dateEnd = document.getElementById('date-end');
+
+        todayFilter.addEventListener('click', () => this.init());
         allDatesFilter.addEventListener('click', () => this.init());
         weekFilter.addEventListener('click', () => this.weekFilter());
         monthFilter.addEventListener('click', () => this.monthFilter());
@@ -24,7 +27,8 @@ export class Dashboard {
         this.init();
 
     }
-    async init(){
+
+    async init() {
         try {
             const result = await HttpUtils.request('/categories/income');
             if (result) {
@@ -33,7 +37,7 @@ export class Dashboard {
                 }
 
                 this.categoriesIncome = result.response;
-                console.log(Object.values(this.categoriesIncome));
+                // console.log(Object.values(this.categoriesIncome));
 
             }
         } catch (error) {
@@ -47,7 +51,7 @@ export class Dashboard {
                 }
 
                 this.categoriesExpense = result.response;
-                console.log(Object.values(this.categoriesExpense));
+                // console.log(Object.values(this.categoriesExpense));
 
             }
         } catch (error) {
@@ -61,7 +65,7 @@ export class Dashboard {
                 }
 
                 this.operations = result.response;
-                console.log(Object.values(this.operations));
+                // console.log(Object.values(this.operations));
 
             }
         } catch (error) {
@@ -71,21 +75,21 @@ export class Dashboard {
         this.dataIncomes = this.categoriesIncome.map(category => {
             const obj = {...category, amount: 0};
             this.operations.forEach(income => {
-                if (income.category === category.title){
+                if (income.category === category.title) {
                     obj.amount += income.amount
                 }
-            })
+            });
             return obj;
-        })
+        });
         this.dataExpenses = this.categoriesExpense.map(category => {
             const obj = {...category, amount: 0};
             this.operations.forEach(income => {
-                if (income.category === category.title){
+                if (income.category === category.title) {
                     obj.amount += income.amount
                 }
-            })
+            });
             return obj;
-        })
+        });
         await this.getPie();
     }
 
@@ -125,7 +129,7 @@ export class Dashboard {
 
         const configIncome = {
             type: 'pie',
-            data:dataIncome,
+            data: dataIncome,
             options
         };
         const configExpense = {
@@ -143,7 +147,7 @@ export class Dashboard {
         //     myChartIncome.clear();
         //     myChartIncome.destroy();
         // };
-        if(myChartIncome) {
+        if (myChartIncome) {
             myChartIncome.destroy();
         }
 
@@ -151,16 +155,22 @@ export class Dashboard {
         const myChartExpense = new Chart(
             document.getElementById('myChartExpense'),
             configExpense,
-        )
-        if(myChartExpense) {
+        );
+        if (myChartExpense) {
             myChartExpense.destroy();
         }
 
     }
+
     async weekFilter() {
+        weekFilter.classList.add('active');
+        allDatesFilter.classList.remove('active');
+        monthFilter.classList.remove('active');
+        yearFilter.classList.remove('active');
+        intervalFilter.classList.remove('active');
+        todayFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'week');
-            console.log(result);
             if (result) {
                 if (result.error) {
                     throw new Error(result.error);
@@ -174,7 +184,14 @@ export class Dashboard {
         }
 
     }
+
     async monthFilter() {
+        monthFilter.classList.add('active');
+        yearFilter.classList.remove('active');
+        intervalFilter.classList.remove('active');
+        weekFilter.classList.remove('active');
+        todayFilter.classList.remove('active');
+        allDatesFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'month');
             console.log(result);
@@ -191,7 +208,14 @@ export class Dashboard {
         }
 
     }
+
     async yearFilter() {
+        yearFilter.classList.add('active');
+        intervalFilter.classList.remove('active');
+        monthFilter.classList.remove('active');
+        weekFilter.classList.remove('active');
+        todayFilter.classList.remove('active');
+        allDatesFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'year');
             console.log(result);
@@ -209,7 +233,37 @@ export class Dashboard {
 
     }
 
+    async allDatesFilter() {
+        allDatesFilter.classList.add('active');
+        monthFilter.classList.remove('active');
+        yearFilter.classList.remove('active');
+        intervalFilter.classList.remove('active');
+        weekFilter.classList.remove('active');
+        todayFilter.classList.remove('active');
+        try {
+            const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'all');
+            console.log(result);
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                this.operations = result;
+                this.getPie();
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     async intervalFilter() {
+        intervalFilter.classList.add('active');
+        monthFilter.classList.remove('active');
+        weekFilter.classList.remove('active');
+        yearFilter.classList.remove('active');
+        todayFilter.classList.remove('active');
+        allDatesFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('interval', this.dateStart, this.dateEnd, null);
             console.log(result);

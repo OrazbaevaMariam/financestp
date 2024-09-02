@@ -52,7 +52,7 @@ export class ExpenseService {
             id: null
         };
 
-        const result = await HttpUtils.request('/categories/expense', 'POST', true, data);
+        const result = await HttpUtils.request( '/categories/expense', 'POST', true, data);
         if (result.redirect || result.error || !result.response || (result.response && result.response.error)) {
             returnObject.error = 'Возникла ошибка при создании расхода. Обратитесь в поддержку';
             if (result.redirect) {

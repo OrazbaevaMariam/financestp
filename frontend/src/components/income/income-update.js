@@ -30,7 +30,7 @@ export class IncomeUpdate {
     }
 
     async getIncome(id) {
-        const result = await HttpUtils.request('/categories/income/' + id);
+        const result = await HttpUtils.request( '/categories/income/' + id);
         this.incomeInputElement.setAttribute('value', result.response.title)
 
         if (result.redirect) {

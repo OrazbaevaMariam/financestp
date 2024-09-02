@@ -2,6 +2,7 @@ import {AuthUtils} from "../../utils/auth-utils.js";
 // import {ValidationUtils} from "../../utils/validation-utils.js";
 // import {AuthService} from "../../services/auth-service.js";
 import {HttpUtils} from "../../utils/http-utils";
+import config from "../../config/config.js";
 
 export class Form {
     constructor(page) {
@@ -61,7 +62,7 @@ export class Form {
         });
 
         this.processElement = document.getElementById('process-button');
-        if (this.processElement){
+        if (this.processElement) {
             this.processElement.onclick = function () {
                 that.processForm();
             };
@@ -94,17 +95,16 @@ export class Form {
     }
 
     validateForm() {
-        window.addEventListener('load', function() {
-            const validForm = this.fields.every(item => item.valid);
-            const isValid = this.agreeElement ? this.agreeElement.checked && validForm : validForm;
-            if (isValid) {
-                this.processElement.removeAttribute('disabled');
-            } else {
-                this.processElement.setAttribute('disabled', 'disabled');
-            }
-            // return isValid;
-            return validForm;
-        });
+        const validForm = this.fields.every(item => item.valid);
+        const isValid = this.agreeElement ? this.agreeElement.checked && validForm : validForm;
+        if (isValid) {
+            this.processElement.removeAttribute('disabled');
+        } else {
+            this.processElement.setAttribute('disabled', 'disabled');
+        }
+        // return isValid;
+        return validForm;
+
 
     }
 
@@ -124,15 +124,15 @@ export class Form {
 
             if (this.page === 'signup') {
 
-                    const fullName = this.fields.find(item => item.name === 'name').element.value;
-                    const fullNameArr = fullName.split(' ').filter(elem => elem);
-                    const lastName = fullNameArr[0];
-                    const name = fullNameArr[1];
-                    const passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat').element.value;
+                const fullName = this.fields.find(item => item.name === 'name').element.value;
+                const fullNameArr = fullName.split(' ').filter(elem => elem);
+                const lastName = fullNameArr[0];
+                const name = fullNameArr[1];
+                const passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat').element.value;
 
 
                 try {
-                    const result = await HttpUtils.request(config.host + '/signup', 'POST', true, {
+                    const result = await HttpUtils.request('/signup', 'POST', true, {
                         name: name,
                         lastName: lastName,
                         email: email,
@@ -159,7 +159,7 @@ export class Form {
 
             try {
 
-                const result = await HttpUtils.request(config.host + '/login', 'POST', true, {
+                const result = await HttpUtils.request('/login', 'POST', true, {
                     email: email,
                     password: password,
                     rememberMe: rememberMe
@@ -167,19 +167,19 @@ export class Form {
 
                 if (result) {
                     if (result.error ||
-                        !result.tokens.accessToken ||
-                        !result.tokens.refreshToken ||
-                        !result.user.lastName ||
-                        !result.user.name ||
-                        !result.user.id) {
+                        !result.response.tokens.accessToken ||
+                        !result.response.tokens.refreshToken ||
+                        !result.response.user.lastName ||
+                        !result.response.user.name ||
+                        !result.response.user.id) {
                         throw new Error(result.message);
                     }
-                    AuthUtils.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+                    AuthUtils.setTokens(result.response.tokens.accessToken, result.response.tokens.refreshToken);
                     AuthUtils.setUserInfo({
                         // fullName: result.user.fullName,
-                        name: result.user.name,
-                        lastName: result.user.lastName,
-                        userId: result.user.id,
+                        name: result.response.user.name,
+                        lastName: result.response.user.lastName,
+                        userId: result.response.user.id,
                         email: email
                     });
                     location.href = '/';
