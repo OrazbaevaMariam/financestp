@@ -29,68 +29,7 @@ export class Dashboard {
     }
 
     async init() {
-        try {
-            const result = await HttpUtils.request('/categories/income');
-            if (result) {
-                if (result.error) {
-                    throw new Error(result.error);
-                }
-
-                this.categoriesIncome = result.response;
-                // console.log(Object.values(this.categoriesIncome));
-
-            }
-        } catch (error) {
-            console.log(error)
-        }
-        try {
-            const result = await HttpUtils.request('/categories/expense');
-            if (result) {
-                if (result.error) {
-                    throw new Error(result.error);
-                }
-
-                this.categoriesExpense = result.response;
-                // console.log(Object.values(this.categoriesExpense));
-
-            }
-        } catch (error) {
-            console.log(error)
-        }
-        try {
-            const result = await HttpUtils.request('/operations?period=all');
-            if (result) {
-                if (result.error) {
-                    throw new Error(result.error);
-                }
-
-                this.operations = result.response;
-                // console.log(Object.values(this.operations));
-
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
-        this.dataIncomes = this.categoriesIncome.map(category => {
-            const obj = {...category, amount: 0};
-            this.operations.forEach(income => {
-                if (income.category === category.title) {
-                    obj.amount += income.amount
-                }
-            });
-            return obj;
-        });
-        this.dataExpenses = this.categoriesExpense.map(category => {
-            const obj = {...category, amount: 0};
-            this.operations.forEach(income => {
-                if (income.category === category.title) {
-                    obj.amount += income.amount
-                }
-            });
-            return obj;
-        });
-        await this.getPie();
+        this.todayFilter()
     }
 
     getPie() {
@@ -159,6 +98,78 @@ export class Dashboard {
         if (myChartExpense) {
             myChartExpense.destroy();
         }
+
+    }
+
+    async todayFilter() {
+        todayFilter.classList.add('active');
+        allDatesFilter.classList.remove('active');
+        monthFilter.classList.remove('active');
+        yearFilter.classList.remove('active');
+        intervalFilter.classList.remove('active');
+        weekFilter.classList.remove('active');
+        try {
+            const result = await HttpUtils.request('/categories/income');
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                this.categoriesIncome = result.response;
+                // console.log(Object.values(this.categoriesIncome));
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        try {
+            const result = await HttpUtils.request('/categories/expense');
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                this.categoriesExpense = result.response;
+                // console.log(Object.values(this.categoriesExpense));
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        try {
+            const result = await HttpUtils.request('/operations?period=all');
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                this.operations = result.response;
+                // console.log(Object.values(this.operations));
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        this.dataIncomes = this.categoriesIncome.map(category => {
+            const obj = {...category, amount: 0};
+            this.operations.forEach(income => {
+                if (income.category === category.title) {
+                    obj.amount += income.amount
+                }
+            });
+            return obj;
+        });
+        this.dataExpenses = this.categoriesExpense.map(category => {
+            const obj = {...category, amount: 0};
+            this.operations.forEach(income => {
+                if (income.category === category.title) {
+                    obj.amount += income.amount
+                }
+            });
+            return obj;
+        });
+        await this.getPie();
 
     }
 

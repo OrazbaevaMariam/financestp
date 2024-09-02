@@ -37,19 +37,7 @@ export class OperationsList {
     }
 
     async init() {
-        try {
-            const result = await HttpUtils.request('/operations');
-            console.log(result);
-            if (result) {
-                if (result.error) {
-                    throw new Error(result.error);
-                }
-
-                this.operations = result;
-            }
-        } catch (error) {
-            console.log(error)
-        }
+        this.todayFilter()
 
     }
 
@@ -135,6 +123,29 @@ export class OperationsList {
 
 
         });
+
+    }
+
+    async todayFilter() {
+        todayFilter.classList.add('active');
+        allDatesFilter.classList.remove('active');
+        monthFilter.classList.remove('active');
+        yearFilter.classList.remove('active');
+        intervalFilter.classList.remove('active');
+        weekFilter.classList.remove('active');
+        try {
+            const result = await HttpUtils.request('/operations');
+            console.log(result);
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                this.operations = result;
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
