@@ -8,6 +8,8 @@ export class Dashboard {
         this.categoriesIncome = null;
         this.operations = null;
         this.dataIncomes = null;
+        this.myChartIncome = null;
+        this.myChartExpense = null;
 
         const todayFilter = document.getElementById('today-filter');
         const weekFilter = document.getElementById('week-filter');
@@ -17,9 +19,11 @@ export class Dashboard {
         const intervalFilter = document.getElementById('interval-filter');
         this.dateStart = document.getElementById('date-start');
         this.dateEnd = document.getElementById('date-end');
+        const ChartIncome = document.getElementById('myChartIncome');
+        const ChartExpense = document.getElementById('myChartExpense');
 
         todayFilter.addEventListener('click', () => this.init());
-        allDatesFilter.addEventListener('click', () => this.init());
+        allDatesFilter.addEventListener('click', () => this.todayFilter());
         weekFilter.addEventListener('click', () => this.weekFilter());
         monthFilter.addEventListener('click', () => this.monthFilter());
         yearFilter.addEventListener('click', () => this.yearFilter());
@@ -29,8 +33,9 @@ export class Dashboard {
     }
 
     async init() {
-        this.todayFilter()
+        await this.todayFilter();
     }
+
 
     getPie() {
 
@@ -78,30 +83,34 @@ export class Dashboard {
         };
 
 
-        const myChartIncome = new Chart(
-            document.getElementById('myChartIncome'),
+
+
+
+        this.myChartIncome = new Chart(
+            ChartIncome,
             configIncome,
         );
         // if(myChartIncome){
         //     myChartIncome.clear();
         //     myChartIncome.destroy();
         // };
-        if (myChartIncome) {
-            myChartIncome.destroy();
-        }
+        // if (myChartIncome) {
+        //     myChartIncome.destroy();
+        // }
 
 
-        const myChartExpense = new Chart(
-            document.getElementById('myChartExpense'),
+        this.myChartExpense = new Chart(
+            ChartExpense,
             configExpense,
         );
-        if (myChartExpense) {
-            myChartExpense.destroy();
-        }
+        // if (myChartExpense) {
+        //     myChartExpense.destroy();
+        // }
 
     }
 
     async todayFilter() {
+        this.destroyCharts();
         todayFilter.classList.add('active');
         allDatesFilter.classList.remove('active');
         monthFilter.classList.remove('active');
@@ -174,6 +183,7 @@ export class Dashboard {
     }
 
     async weekFilter() {
+        this.destroyCharts();
         weekFilter.classList.add('active');
         allDatesFilter.classList.remove('active');
         monthFilter.classList.remove('active');
@@ -197,6 +207,7 @@ export class Dashboard {
     }
 
     async monthFilter() {
+        this.destroyCharts();
         monthFilter.classList.add('active');
         yearFilter.classList.remove('active');
         intervalFilter.classList.remove('active');
@@ -221,6 +232,7 @@ export class Dashboard {
     }
 
     async yearFilter() {
+        this.destroyCharts();
         yearFilter.classList.add('active');
         intervalFilter.classList.remove('active');
         monthFilter.classList.remove('active');
@@ -245,6 +257,7 @@ export class Dashboard {
     }
 
     async allDatesFilter() {
+        this.destroyCharts();
         allDatesFilter.classList.add('active');
         monthFilter.classList.remove('active');
         yearFilter.classList.remove('active');
@@ -269,6 +282,7 @@ export class Dashboard {
     }
 
     async intervalFilter() {
+        this.destroyCharts();
         intervalFilter.classList.add('active');
         monthFilter.classList.remove('active');
         weekFilter.classList.remove('active');
@@ -291,6 +305,15 @@ export class Dashboard {
         }
 
     }
+    destroyCharts() {
+        if (this.myChartIncome){
+            this.myChartIncome.destroy();
+        }
+        if (this.myChartExpense){
+            this.myChartExpense.destroy();
+        }
+    }
+
 
 }
 

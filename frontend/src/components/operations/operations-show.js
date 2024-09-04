@@ -4,6 +4,7 @@ import {OperationsService} from "../../services/operations-service";
 
 export class OperationsList {
     currentIdDelete = null;
+
     // currentIdEdit = null;
 
 
@@ -37,7 +38,7 @@ export class OperationsList {
     }
 
     async init() {
-        this.todayFilter()
+       await this.todayFilter()
 
     }
 
@@ -47,7 +48,7 @@ export class OperationsList {
 
         // console.log(this.tableBody)
 
-        this.operations.response.forEach( (operation, index) => {
+        this.operations.response.forEach((operation, index) => {
             console.log(operation)
             const table = document.createElement('tr');
 
@@ -58,7 +59,7 @@ export class OperationsList {
             const operationType = document.createElement('td');
             operationType.classList.add('text-success', 'text-center');
             // console.log(operation.type)
-            if (operation.type === "income"){
+            if (operation.type === "income") {
                 // operationType.innerText = operation.type;
                 operationType.innerText = "Доход";
                 operationType.className = "text-success";
@@ -95,7 +96,6 @@ export class OperationsList {
                 operationDeleteOperationLink.setAttribute('id', this.currentIdDelete);
                 console.log(this.currentIdDelete)
             }
-
 
 
             const operationEditOperation = document.createElement('td');
@@ -142,6 +142,7 @@ export class OperationsList {
                 }
 
                 this.operations = result;
+                this.showOperations()
             }
         } catch (error) {
             console.log(error)
@@ -172,6 +173,7 @@ export class OperationsList {
         }
 
     }
+
     async allDatesFilter() {
         allDatesFilter.classList.add('active');
         monthFilter.classList.remove('active');
@@ -195,6 +197,7 @@ export class OperationsList {
         }
 
     }
+
     async monthFilter() {
         monthFilter.classList.add('active');
         yearFilter.classList.remove('active');
@@ -218,6 +221,7 @@ export class OperationsList {
         }
 
     }
+
     async yearFilter() {
         yearFilter.classList.add('active');
         intervalFilter.classList.remove('active');
@@ -267,18 +271,18 @@ export class OperationsList {
         }
 
     }
+
     async deleteOperation() {
 
         const response = await OperationsService.deleteOperation(this.currentIdDelete);
+        console.log(response);
 
-        console.log(response)
-
-        if (response.error){
+        if (response.error) {
             alert(response.error);
             return response.redirect ? window.location.href = response.redirect : null;
             // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
-        // return window.location.href = '/operations';
+        return window.location.href = '/operations';
     }
 
 }
