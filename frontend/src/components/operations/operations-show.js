@@ -38,7 +38,7 @@ export class OperationsList {
     }
 
     async init() {
-       await this.todayFilter()
+        await this.todayFilter()
 
     }
 

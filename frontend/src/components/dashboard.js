@@ -11,29 +11,29 @@ export class Dashboard {
         this.myChartIncome = null;
         this.myChartExpense = null;
 
-        const todayFilter = document.getElementById('today-filter');
-        const weekFilter = document.getElementById('week-filter');
-        const monthFilter = document.getElementById('month-filter');
-        const yearFilter = document.getElementById('year-filter');
-        const allDatesFilter = document.getElementById('all-dates-filter');
-        const intervalFilter = document.getElementById('interval-filter');
+        this.todayFilter = document.getElementById('today-filter');
+        this.weekFilter = document.getElementById('week-filter');
+        this.monthFilter = document.getElementById('month-filter');
+        this.yearFilter = document.getElementById('year-filter');
+        this.allDatesFilter = document.getElementById('all-dates-filter');
+        this.intervalFilter = document.getElementById('interval-filter');
         this.dateStart = document.getElementById('date-start');
         this.dateEnd = document.getElementById('date-end');
-        const ChartIncome = document.getElementById('myChartIncome');
-        const ChartExpense = document.getElementById('myChartExpense');
+        this.ChartIncome = document.getElementById('myChartIncome');
+        this.ChartExpense = document.getElementById('myChartExpense');
 
-        todayFilter.addEventListener('click', () => this.init());
-        allDatesFilter.addEventListener('click', () => this.todayFilter());
-        weekFilter.addEventListener('click', () => this.weekFilter());
-        monthFilter.addEventListener('click', () => this.monthFilter());
-        yearFilter.addEventListener('click', () => this.yearFilter());
-        intervalFilter.addEventListener('click', () => this.intervalFilter());
+        this.todayFilter.addEventListener('click', () => this.init());
+        this.allDatesFilter.addEventListener('click', () => this.todayF());
+        this.weekFilter.addEventListener('click', () => this.weekF());
+        this.monthFilter.addEventListener('click', () => this.monthF());
+        this.yearFilter.addEventListener('click', () => this.yearF());
+        this.intervalFilter.addEventListener('click', () => this.intervalF());
         this.init();
 
     }
 
     async init() {
-        await this.todayFilter();
+        await this.todayF();
     }
 
 
@@ -87,7 +87,7 @@ export class Dashboard {
 
 
         this.myChartIncome = new Chart(
-            ChartIncome,
+           this.ChartIncome,
             configIncome,
         );
         // if(myChartIncome){
@@ -100,7 +100,7 @@ export class Dashboard {
 
 
         this.myChartExpense = new Chart(
-            ChartExpense,
+            this.ChartExpense,
             configExpense,
         );
         // if (myChartExpense) {
@@ -109,14 +109,14 @@ export class Dashboard {
 
     }
 
-    async todayFilter() {
+    async todayF() {
         this.destroyCharts();
-        todayFilter.classList.add('active');
-        allDatesFilter.classList.remove('active');
-        monthFilter.classList.remove('active');
-        yearFilter.classList.remove('active');
-        intervalFilter.classList.remove('active');
-        weekFilter.classList.remove('active');
+        this.todayFilter.classList.add('active');
+        this.allDatesFilter.classList.remove('active');
+        this.monthFilter.classList.remove('active');
+        this.yearFilter.classList.remove('active');
+        this.intervalFilter.classList.remove('active');
+        this.weekFilter.classList.remove('active');
         try {
             const result = await HttpUtils.request('/categories/income');
             if (result) {
@@ -182,14 +182,14 @@ export class Dashboard {
 
     }
 
-    async weekFilter() {
+    async weekF() {
         this.destroyCharts();
-        weekFilter.classList.add('active');
-        allDatesFilter.classList.remove('active');
-        monthFilter.classList.remove('active');
-        yearFilter.classList.remove('active');
-        intervalFilter.classList.remove('active');
-        todayFilter.classList.remove('active');
+        this.weekFilter.classList.add('active');
+        this.allDatesFilter.classList.remove('active');
+        this.monthFilter.classList.remove('active');
+        this.yearFilter.classList.remove('active');
+        this.intervalFilter.classList.remove('active');
+        this.todayFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'week');
             if (result) {
@@ -206,14 +206,14 @@ export class Dashboard {
 
     }
 
-    async monthFilter() {
+    async monthF() {
         this.destroyCharts();
-        monthFilter.classList.add('active');
-        yearFilter.classList.remove('active');
-        intervalFilter.classList.remove('active');
-        weekFilter.classList.remove('active');
-        todayFilter.classList.remove('active');
-        allDatesFilter.classList.remove('active');
+        this.monthFilter.classList.add('active');
+        this.yearFilter.classList.remove('active');
+        this.intervalFilter.classList.remove('active');
+        this.weekFilter.classList.remove('active');
+        this.todayFilter.classList.remove('active');
+        this.allDatesFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'month');
             console.log(result);
@@ -231,14 +231,14 @@ export class Dashboard {
 
     }
 
-    async yearFilter() {
+    async yearF() {
         this.destroyCharts();
-        yearFilter.classList.add('active');
-        intervalFilter.classList.remove('active');
-        monthFilter.classList.remove('active');
-        weekFilter.classList.remove('active');
-        todayFilter.classList.remove('active');
-        allDatesFilter.classList.remove('active');
+        this.yearFilter.classList.add('active');
+        this.intervalFilter.classList.remove('active');
+        this.monthFilter.classList.remove('active');
+        this.weekFilter.classList.remove('active');
+        this.todayFilter.classList.remove('active');
+        this.allDatesFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'year');
             console.log(result);
@@ -256,14 +256,14 @@ export class Dashboard {
 
     }
 
-    async allDatesFilter() {
+    async allDatesF() {
         this.destroyCharts();
-        allDatesFilter.classList.add('active');
-        monthFilter.classList.remove('active');
-        yearFilter.classList.remove('active');
-        intervalFilter.classList.remove('active');
-        weekFilter.classList.remove('active');
-        todayFilter.classList.remove('active');
+        this.allDatesFilter.classList.add('active');
+        this.monthFilter.classList.remove('active');
+        this.yearFilter.classList.remove('active');
+        this.intervalFilter.classList.remove('active');
+        this.weekFilter.classList.remove('active');
+        this.todayFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('', this.dateStart, this.dateEnd, 'all');
             console.log(result);
@@ -281,14 +281,14 @@ export class Dashboard {
 
     }
 
-    async intervalFilter() {
+    async intervalF() {
         this.destroyCharts();
-        intervalFilter.classList.add('active');
-        monthFilter.classList.remove('active');
-        weekFilter.classList.remove('active');
-        yearFilter.classList.remove('active');
-        todayFilter.classList.remove('active');
-        allDatesFilter.classList.remove('active');
+        this.intervalFilter.classList.add('active');
+        this.monthFilter.classList.remove('active');
+        this.weekFilter.classList.remove('active');
+        this.yearFilter.classList.remove('active');
+        this.todayFilter.classList.remove('active');
+        this.allDatesFilter.classList.remove('active');
         try {
             const result = await OperationsService.getOperationsFilter('interval', this.dateStart, this.dateEnd, null);
             console.log(result);

@@ -87,7 +87,7 @@ export class OperationsUpdate {
             this.OperationCategory.appendChild(operationOptionElement);
 
 
-        })
+        });
         const currentCategory = categories.find(item => item.title === this.currentOperation.category);
         if (currentCategory) {
             this.OperationCategory.value = currentCategory.id;
