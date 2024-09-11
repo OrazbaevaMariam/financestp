@@ -6,23 +6,12 @@ export class OperationsExpenseCreate {
 
     constructor() {
 
-
-        // document.getElementById('createExpenseButton').addEventListener('click', this.saveOrder.bind(this));
-        //
         document.getElementById('createExpenseButton').addEventListener('click', this.saveExpense.bind(this));
         document.getElementById('cancelExpenseButton').addEventListener('click', this.cancelExpense.bind(this));
         this.categoryExpense = null;
 
         this.findElements();
         this.init();
-
-        // this.validations = [
-        //     { element :this.expenseCreateInputSelectElement = document.getElementById('input-expense-type')},
-        //     { element :this.expenseCreateISelectCategoryElement = document.getElementById('input-expense-category')},
-        //     { element :this.expenseCreateInputAmountElement = document.getElementById('input-expense-sum')},
-        //     { element :this.expenseCreateInputDateElement = document.getElementById('input-expense-date')},
-        //     { element :this.expenseCreateInputCommentElement = document.getElementById('input-expense-message')},
-        // ]
 
     }
     findElements() {
@@ -36,7 +25,6 @@ export class OperationsExpenseCreate {
     };
     async init() {
         await this.getExpenses();
-        // this.expenseCreateSelectCategoryElement = await this.getExpenses();
     }
 
     async getExpenses() {
@@ -48,7 +36,6 @@ export class OperationsExpenseCreate {
             this.expenseCreateSelectOptionElement.innerText = value.title;
             this.expenseCreateSelectIncomeCategoryElement.appendChild(this.expenseCreateSelectOptionElement);
         }
-        // console.log(this.expenseCreateSelectIncomeCategoryElement.value)
 
         return result.response;
 
@@ -73,30 +60,6 @@ export class OperationsExpenseCreate {
             return response.redirect ? window.location.href = response.redirect : null;
         }
         return window.location.href = '/operations';
-        // return this.openNewRoute('/operations');
-
-        // this.incomeCreateISelectCategoryElement.value = ;
-
-        // if (ValidationUtils.validateForm(this.validations)) {
-        //     const createData = {
-        //         type: this.expenseCreateInputSelectElement.value,
-        //         category: this.expenseCreateISelectCategoryElement.value,
-        //         sum: this.expenseCreateInputAmountElement.value,
-        //         date: this.expenseCreateInputDateElement.toISOString(),
-        //     };
-        //
-        //     if (this.expenseCreateInputCommentElement) {
-        //         createData.message = this.expenseCreateInputCommentElement.value;
-        //     }
-        //     const response = await ExpenseService.createExpense(createData);
-        //
-        //     if (response.error) {
-        //         alert(response.error);
-        //         return response.redirect ? this.openNewRoute(response.redirect) : null;
-        //     }
-        //
-        //     return this.openNewRoute('/operations');
-        // }
     }
     async cancelExpense(e) {
         e.preventDefault();

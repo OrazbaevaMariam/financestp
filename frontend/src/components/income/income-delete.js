@@ -17,7 +17,6 @@ export class IncomeDelete {
 
     async deleteIncome(id) {
         const response = await IncomeService.deleteIncome(id);
-// console.log(response)
         if (response.error) {
             alert(response.error);
             return response.redirect ? window.location.href = response.redirect : null;

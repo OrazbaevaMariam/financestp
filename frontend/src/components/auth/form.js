@@ -1,8 +1,5 @@
 import {AuthUtils} from "../../utils/auth-utils.js";
-// import {ValidationUtils} from "../../utils/validation-utils.js";
-// import {AuthService} from "../../services/auth-service.js";
 import {HttpUtils} from "../../utils/http-utils";
-import config from "../../config/config.js";
 
 export class Form {
     constructor(page) {
@@ -67,14 +64,6 @@ export class Form {
                 that.processForm();
             };
         }
-
-        // if (this.page === 'signup') {
-        //     this.agreeElement = document.getElementById('agree');
-        //     this.agreeElement.onchange = function () {
-        //         that.validateForm();
-        //     }
-        // }
-
     }
 
     validateField(field, element) {
@@ -102,10 +91,7 @@ export class Form {
         } else {
             this.processElement.setAttribute('disabled', 'disabled');
         }
-        // return isValid;
         return validForm;
-
-
     }
 
     async processForm() {
@@ -138,10 +124,6 @@ export class Form {
                         email: email,
                         password: password,
                         passwordRepeat: passwordRepeat
-                        // name: this.fields.find(item => item.name === 'name').element.value,
-                        // lastName: this.fields.find(item => item.name === 'lastName').element.value,
-                        // email: email,
-                        // password: password,
                     });
                     console.log(result);
 
@@ -190,64 +172,3 @@ export class Form {
         }
     }
 }
-
-
-// export class Form {
-//
-//     constructor(openNewRoute) {
-//         this.openNewRoute = openNewRoute;
-//
-//         if (AuthUtils.getAuthInfo('accessToken')) {
-//             return this.openNewRoute('/');
-//         }
-//
-//         this.nameElement = document.getElementById('name');
-//         this.emailElement = document.getElementById('email');
-//         this.passwordElement = document.getElementById('password');
-//         this.passwordRepeatElement = document.getElementById('password-repeat');
-//         this.commonErrorElement = document.getElementById('common-error-signup');
-//
-//         this.findElements();
-//
-//         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
-//     }
-//
-//     findElements() {
-//         this.validations = [
-//             {element: this.nameElement, options: {pattern: /^[А-Яа-я]{2,}\s+[А-Яа-я]{2,}\s+[А-Яа-я]{2,}\s*$/}},
-//             {element: this.emailElement, options: {pattern: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/}},
-//             {element: this.passwordElement, options: {pattern: /^(?=.*\d)(?=.*[A-Z])[0-9a-zA-Z]{8,}$/}},
-//             {element: this.passwordRepeatElement, options: {compareTo: this.passwordElement.value}},
-//         ];
-//     }
-//
-//     async signUp() {
-//         this.commonErrorElement.style.display = 'none';
-//         for (let i = 0; i < this.validations.length; i++) {
-//             if (this.validations[i].element === this.passwordRepeatElement) {
-//                 this.validations[i].options.compareTo = this.passwordElement.value;
-//             }
-//         }
-//
-//         const errorElement = document.getElementById('common-error-signup');
-//
-//         if (ValidationUtils.validateForm(this.validations, errorElement)) {
-//             const signupResult = await AuthService.signUp({
-//                 name: this.nameElement.value.split(' ')[1],
-//                 lastName: this.nameElement.value.split(' ')[0],
-//                 email: this.emailElement.value,
-//                 password: this.passwordElement.value,
-//                 passwordRepeat: this.passwordRepeatElement.value,
-//             });
-//             if (signupResult) {
-//                 AuthUtils.setAuthInfo(signupResult.tokens.accessToken, signupResult.tokens.refreshToken, {
-//                     id: signupResult.user.id,
-//                     name: signupResult.user.name + ' ' + signupResult.user.lastName,
-//                 });
-//                 return this.openNewRoute('/');
-//             }
-//             this.commonErrorElement.style.display = 'block';
-//         }
-//     }
-//
-// }

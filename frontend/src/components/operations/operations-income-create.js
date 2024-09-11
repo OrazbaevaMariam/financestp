@@ -15,14 +15,6 @@ export class OperationsIncomeCreate {
         this.findElements();
 
         this.init();
-        //
-        // this.validations = [
-        //     {element: this.incomeCreateInputSelectElement = document.getElementById('input-income-type')},
-        //     {element: this.incomeCreateSelectCategoryElement = document.getElementById('input-income-category')},
-        //     {element: this.incomeCreateInputAmountElement = document.getElementById('input-income-sum')},
-        //     {element: this.incomeCreateInputDateElement = document.getElementById('input-income-date')},
-        //     {element: this.incomeCreateInputCommentElement = document.getElementById('input-income-message')},
-        // ]
 
     }
 

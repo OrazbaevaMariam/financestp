@@ -15,7 +15,6 @@ export class OperationsDelete {
         if (response.error){
             alert(response.error);
             return response.redirect ? location.href = response.redirect : null;
-            // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
         return window.location.href = '/income';
 

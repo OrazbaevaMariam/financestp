@@ -44,11 +44,9 @@ module.exports = {
             patterns: [
                 {from: "./src/templates", to: "templates"},
                 {from: "./src/static/images", to: "images"},
-                // {from: "./src/styles", to: "styles"},
                 {from: "./node_modules/jquery/dist/jquery.js", to: "js"},
                 {from: "./node_modules/bootstrap/dist/js/bootstrap.bundle.js", to: "js"},
                 {from: "./node_modules/bootstrap/dist/js/bootstrap.js", to: "js"},
-                // {from: "./src/components/bootstrap.bundle.js", to: "js"},
                 {from: "./node_modules/chart.js/dist/chart.js", to: "js"},
                 // {from: "./.env", to: "./"},
             ],

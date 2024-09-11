@@ -1,12 +1,8 @@
 import {HttpUtils} from "../../utils/http-utils";
-import {IncomeService} from "../../services/income-service";
 import {OperationsService} from "../../services/operations-service";
 
 export class OperationsList {
     currentIdDelete = null;
-
-    // currentIdEdit = null;
-
 
     constructor() {
 
@@ -30,8 +26,6 @@ export class OperationsList {
         intervalFilter.addEventListener('click', () => this.intervalFilter());
 
         operationDeleteButton.addEventListener('click', () => this.deleteOperation());
-        // operationDeleteButton.addEventListener('click', () => this.editOperation());
-        // document.getElementById(this.currentIdEdit).addEventListener('click', this.editOperation.bind(this));
 
         this.init();
 
@@ -44,9 +38,6 @@ export class OperationsList {
 
     showOperations() {
         this.tableBody.innerHTML = '';
-        // console.log(this.operations.response)
-
-        // console.log(this.tableBody)
 
         this.operations.response.forEach((operation, index) => {
             console.log(operation)
@@ -95,7 +86,7 @@ export class OperationsList {
                 this.currentIdDelete = operation.id;
                 operationDeleteOperationLink.setAttribute('id', this.currentIdDelete);
                 console.log(this.currentIdDelete)
-            }
+            };
 
 
             const operationEditOperation = document.createElement('td');
@@ -108,7 +99,7 @@ export class OperationsList {
             operationEditOperation.onclick = () => {
                 this.currentIdEdit = operation.id;
                 console.log(this.currentIdEdit)
-            }
+            };
 
             table.appendChild(number);
             table.appendChild(operationType);
@@ -280,7 +271,6 @@ export class OperationsList {
         if (response.error) {
             alert(response.error);
             return response.redirect ? window.location.href = response.redirect : null;
-            // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
         return window.location.href = '/operations';
     }

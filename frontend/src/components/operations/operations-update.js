@@ -114,8 +114,6 @@ export class OperationsUpdate {
 
         if (response.error) {
             console.log('error', response.error)
-            // alert(response.error);
-            // return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
         return window.location.href = '/operations';
 

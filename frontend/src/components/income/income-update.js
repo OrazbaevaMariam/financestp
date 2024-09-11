@@ -43,16 +43,9 @@ export class IncomeUpdate {
 
         this.categoryIncome = result.response;
         for (let key in this.categoryIncome) {
-            console.log(key)
             // var obj = data.messages[key];
             // ...
         }
-        // for (let value of Object.values(this.categoryIncome)) {
-        //     console.log(this.categoryIncome)
-        //
-        // }
-        // console.log(this.categoryIncome.title)
-
         return result.response;
     }
 

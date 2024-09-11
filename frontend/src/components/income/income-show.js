@@ -102,7 +102,6 @@ export class IncomeShow {
             alert(response.error);
             return response.redirect ? window.location.href = response.redirect : null;
         }
-       // return window.location.href = '/income';
 
     }
 }

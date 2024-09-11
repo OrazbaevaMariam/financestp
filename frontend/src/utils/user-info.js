@@ -1,7 +1,5 @@
 import {AuthUtils} from "./auth-utils";
-import {AuthService} from "../services/auth-service";
 import {HttpUtils} from "./http-utils";
-import config from "../config/config";
 
 export class UserInfo {
     constructor() {

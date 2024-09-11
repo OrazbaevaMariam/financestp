@@ -10,11 +10,9 @@ import {OperationsUpdate} from "./components/operations/operations-update";
 import {Dashboard} from "./components/dashboard";
 import {Form} from "./components/auth/form";
 import {Logout} from "./components/auth/logout";
-import {FileUtils} from "./utils/file-utils";
 import {AuthUtils} from "./utils/auth-utils";
 import {ExpenseDelete} from "./components/expense/expense-delete";
 import {IncomeDelete} from "./components/income/income-delete";
-import {Sidebar} from "./components/sidebar";
 import {OperationsIncomeCreate} from "./components/operations/operations-income-create";
 import {OperationsDelete} from "./components/operations/operations-delete";
 import {UserInfo} from "./utils/user-info";
@@ -25,8 +23,6 @@ export class Router {
 
         this.titleElement = document.getElementById('title');
         this.contentElement = document.getElementById('content');
-        // this.sidebarElement = document.getElementById('main-sidebar');
-        // this.userName = null;
         this.profileFullNameElement = document.getElementById('profile-name');
         this.menuHref = document.querySelectorAll('a.nav-link');
         window.addEventListener('hashchange', () => {
@@ -57,24 +53,16 @@ export class Router {
                 title: 'Авторизация',
                 template: '/templates/pages/auth/login.html',
                 load: () => {
-                    // document.body.style.height = '100vh';
                     new Form('login');
                 },
-                // unload: () => {
-                //     document.body.style.height = 'auto';
-                // },
             },
             {
                 route: '/sign-up',
                 title: 'Регистрация',
                 template: '/templates/pages/auth/sign-up.html',
                 load: () => {
-                    // document.body.style.height = '100vh';
                     new Form('signup');
                 },
-                // unload: () => {
-                //     document.body.style.height = 'auto';
-                // },
             },
             {
                 route: '/logout',
@@ -231,12 +219,6 @@ export class Router {
                 },
 
             },
-            // {
-            //     route: '/orders/delete',
-            //     load: () => {
-            //         new OrdersDelete(this.openNewRoute.bind(this));
-            //     }
-            // },
         ];
     }
     async openRoute() {
@@ -265,170 +247,12 @@ export class Router {
 
         }
 
-        // this.stylesElement.setAttribute('href', newRoute.styles);
         this.titleElement.innerText = newRoute.title;
-
-        // if (!this.sidebarElement){
-        //     this.sidebarElement = document.getElementById('main-sidebar')
-        // }
-
-        // const userInfo = AuthUtils.getAuthInfo();
-        // const accessToken = localStorage.getItem(AuthUtils.accessTokenKey);
-        //
-        // if (userInfo && accessToken) {
-        //     this.sidebarElement.style.display = 'flex';
-        // } else {
-        //     this.sidebarElement.style.display = 'none';
-        // }
 
         newRoute.load();
     }
 
 
-
-
-
-    // async openNewRoute(url) {
-    //     const currentRoute = window.location.pathname;
-    //     history.pushState({}, '', url);
-    //     await this.activateRoute(null, currentRoute);
-    // }
-
-    // async openRoute() {
-    //
-    //     // const urlRoute = window.location.hash.split('?')[0];
-    //
-    //     // const urlRoute = window.location.hash.substring(2);
-    //     const urlRoute = window.location.hash.slice(1);
-    //
-    //     if (urlRoute === '/logout') {
-    //         // console.log(urlRoute)
-    //         await AuthUtils.logout();
-    //         window.location.href = '/';
-    //         return;
-    //     }
-    //     const newRoute = this.routes.find(item => {
-    //         // console.log(item.route)
-    //
-    //         // console.log(item.route === urlRoute)
-    //
-    //
-    //     });
-    //     console.log(newRoute);
-    //
-    //     // if (!newRoute) {
-    //     //     window.location.href = '/';
-    //     //     return;
-    //     // }
-    //
-    //     newRoute.load();
-    //
-    // }
-    //
-    //
-    // // async clickHandler(e) {
-    // //     let element = null;
-    // //     if (e.target.nodeName === 'A') {
-    // //         element = e.target;
-    // //     } else if (e.target.parentNode.nodeName === 'A') {
-    // //         element = e.target.parentNode;
-    // //     }
-    // //
-    // //     if (element) {
-    // //         e.preventDefault();
-    // //
-    // //         const currentRoute = window.location.pathname;
-    // //         const url = element.href.replace(window.location.origin, '');
-    // //         if (!url || (currentRoute === url.replace('#', '')) || url.startsWith('javascript:void(0)')) {
-    // //             return;
-    // //         }
-    // //         await this.openNewRoute(url);
-    // //     }
-    // // }
-    //
-    // async activateRoute(e, oldRoute = null) {
-    //     if (oldRoute) {
-    //         const currentRoute = this.routes.find(item => item.route === oldRoute);
-    //         if (currentRoute.styles && currentRoute.styles.length > 0) {
-    //             currentRoute.styles.forEach(style => {
-    //                 document.querySelector(`link[href='/css/${style}']`).remove();
-    //             });
-    //         }
-    //         if (currentRoute.scripts && currentRoute.scripts.length > 0) {
-    //             currentRoute.scripts.forEach(script => {
-    //                 document.querySelector(`script[src='/js/${script}']`).remove();
-    //             });
-    //         }
-    //
-    //         if (currentRoute.unload && typeof currentRoute.unload === 'function') {
-    //             currentRoute.unload();
-    //         }
-    //     }
-    //
-    //     const urlRoute = window.location.pathname;
-    //     const newRoute = this.routes.find(item => item.route === urlRoute);
-    //
-    //     if (newRoute) {
-    //         if (newRoute.useLayout && !AuthUtils.getAuthInfo().userInfo) {
-    //             window.location = '/login'
-    //         }
-    //         if (newRoute.styles && newRoute.styles.length > 0) {
-    //             newRoute.styles.forEach(style => {
-    //                 FileUtils.loadPageStyle('/css/' + style);
-    //             });
-    //         }
-    //         if (newRoute.scripts && newRoute.scripts.length > 0) {
-    //             for (const script of newRoute.scripts) {
-    //                 await FileUtils.loadPageScript('/js/' + script);
-    //             }
-    //         }
-    //
-    //         if (newRoute.title) {
-    //             this.titlePageElement.innerText = newRoute.title + ' | Accounting Finances';
-    //         }
-    //         if (newRoute.filePathTemplate) {
-    //             let contentBlock = this.contentPageElement;
-    //             if (newRoute.useLayout) {
-    //                 this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
-    //                 contentBlock = document.getElementById('content-layout');
-    //                 document.body.classList.add('sidebar-mini');
-    //                 document.body.classList.add('layout-fixed');
-    //
-    //                 if (!this.userName) {
-    //                     let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoTokenKey);
-    //                     if (userInfo) {
-    //                         userInfo = JSON.parse(userInfo);
-    //                         if (userInfo.name && userInfo.lastName) {
-    //                             this.userName = userInfo.name + userInfo.lastName;
-    //                         }
-    //                     }
-    //                 }
-    //                 this.profileNameElement = this.userName;
-    //                 // this.profileNameElement.innerText = localStorage.getItem(AuthUtils.getAuthInfo(AuthUtils.userInfoTokenKey));
-    //                 // console.log(AuthUtils.userInfoTokenKey)
-    //
-    //                 this.activateMenuItem(newRoute);
-    //             } else {
-    //                 document.body.classList.remove('sidebar-mini');
-    //                 document.body.classList.remove('layout-fixed');
-    //             }
-    //             contentBlock.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
-    //         }
-    //
-    //         if (newRoute.load && typeof newRoute.load === 'function') {
-    //             newRoute.load();
-    //         }
-    //         if(newRoute.useLayout){
-    //             new Sidebar();
-    //         }
-    //
-    //     } else {
-    //         console.log('No route found');
-    //
-    //         history.pushState({}, '', '/404');
-    //         await this.activateRoute(null);
-    //     }
-    // }
 
     activateMenuItem(route) {
         document.querySelectorAll('.sidebar .nav-link').forEach(item => {
