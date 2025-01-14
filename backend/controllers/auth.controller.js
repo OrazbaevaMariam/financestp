@@ -46,6 +46,8 @@ class AuthController {
 
             res.status(201).json({
                 user: {id: user.id, email: user.email, name: user.name, lastName: user.lastName},
+                error: false,
+                message: "Account created successfully"
             });
         } catch (err) {
             console.log(err);
@@ -85,6 +87,8 @@ class AuthController {
             const {accessToken, refreshToken} = await TokenUtils.generateTokens(user, req.body.rememberMe);
 
             res.status(200).json({
+                error: false,
+                message: "Logged in successfully",
                 tokens: {
                     accessToken,
                     refreshToken,
@@ -150,7 +154,7 @@ class AuthController {
 
             const user = UserModel.findOne({refreshToken: req.body.refreshToken});
             if (!user) {
-                return res.status(200).json({error: false, message: "Logged Out Successfully"});
+                return res.status(404).json({error: true, message: "Not found"});
             }
 
             UserModel.clearToken(user.email);

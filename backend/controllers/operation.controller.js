@@ -11,7 +11,7 @@ class OperationController {
         res.json(result);
     }
 
-    static async getOperation(req, res) {
+     static async getOperation(req, res) {
         const {id} = req.params;
         if (!id) {
             return res.status(400)
