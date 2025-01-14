@@ -14,8 +14,8 @@ class App {
 
     }
 
-    private handleRouteChanging(): void {
-        this.router.openRoute();
+    async handleRouteChanging(): Promise<void> {
+        await this.router.openRoute();
 
 
     }

@@ -1,7 +1,5 @@
 import {HTTPMethodsEnum} from "../../enums/http-methods.enum";
 import {FieldsType} from "../../types/fields.type";
-import {LoginResponseType} from "../../types/login-response.type";
-import {SignupResponseType} from "../../types/signup-response.type";
 import {AuthUtils} from "../../utils/auth-utils";
 import {HttpUtils} from "../../utils/http-utils";
 import {HttpResultType} from "../../types/http-result.type";
@@ -177,34 +175,32 @@ export class Form {
                     password: password,
                     rememberMe: rememberMe
                 });
-
                 if (result as HttpResultType) {
-                    if (result.error || !result.response.tokens || !result.response.user ||
-                        !result.response.tokens.accessToken ||
-                        !result.response.tokens.refreshToken ||
-                        !result.response.user.lastName ||
-                        !result.response.user.name ||
-                        !result.response.user.id) {
+                    console.log(result)
+
+                    if (result.error) {
                         throw new Error(result.response.message);
+                    } else {
+                        if (result.response.tokens) {
+                            AuthUtils.setTokens(result.response.tokens.accessToken, result.response.tokens.refreshToken);
+                        }
+                        if (result.response.user) {
+                            AuthUtils.setUserInfo({
+                                // fullName: result.user.fullName,
+                                name: result.response.user.name,
+                                lastName: result.response.user.lastName,
+                                userId: result.response.user.id,
+                                email: email as string
+                            });
+                        }
+                        location.href = '/';
                     }
-                    if (result.response.tokens) {
-                        AuthUtils.setTokens(result.response.tokens.accessToken, result.response.tokens.refreshToken);
-                    }
-                    if (result.response.user) {
-                        AuthUtils.setUserInfo({
-                            // fullName: result.user.fullName,
-                            name: result.response.user.name,
-                            lastName: result.response.user.lastName,
-                            userId: result.response.user.id,
-                            email: email as string
-                        });
-                    }
-                    location.href = '/';
                 }
             } catch (error) {
                 console.log(error);
                 return
             }
+
         }
     }
 }
