@@ -261,9 +261,12 @@ export class Router {
             window.location.href = '/';
             return
         }
-        const contentLayoutElement: HTMLElement | null = document.getElementById('content-layout');
 
         if (urlRoute !== '/login' && urlRoute !== '/sign-up' && urlRoute !== '/404') {
+            this.contentElement!.innerHTML =
+                await fetch(newRoute.useLayout).then(response => response.text());
+            const contentLayoutElement: HTMLElement | null = document.getElementById('content-layout');
+
             if (!this.contentElement || !contentLayoutElement)
                 if (urlRoute === '/') {
                     return
@@ -273,8 +276,7 @@ export class Router {
                 }
 
 
-            this.contentElement.innerHTML =
-                await fetch(newRoute.useLayout).then(response => response.text());
+
             contentLayoutElement.innerHTML =
                 await fetch(newRoute.template).then(response => response.text());
         } else {
