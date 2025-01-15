@@ -275,8 +275,6 @@ export class Router {
                     return
                 }
 
-
-
             contentLayoutElement.innerHTML =
                 await fetch(newRoute.template).then(response => response.text());
         } else {
