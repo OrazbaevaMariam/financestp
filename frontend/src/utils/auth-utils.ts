@@ -129,8 +129,10 @@ export class AuthUtils {
                 const tokens: RefreshResponseType | null = await response.json();
                 if (tokens && tokens.accessToken && tokens.refreshToken) {
                     this.setTokens(tokens.accessToken, tokens.refreshToken);
+                    this.setAuthInfo(tokens.accessToken, tokens.refreshToken);
                     // this.setAuthInfo(tokens.accessToken, tokens.refreshToken);
                     result = true;
+                    console.log(result)
                 }
             }
         }
