@@ -61,17 +61,18 @@ export class HttpUtils {
                 } else {
                     //2-токен устарел/невалидный (надо обновить)
                     const updateTokenResult: boolean = await AuthUtils.updateRefreshToken();
-
+                    console.log(updateTokenResult);
                     if (updateTokenResult) {
                         //запрос повторно
                         return this.request(url, method, useAuth, body);
-                    } else {
-                        location.href = '/login';
-                        // result.redirect = '/login';
                     }
+                    // else {
+                    //     location.href = '/login';
+                    //     // result.redirect = '/login';
+                    // }
                 }
             }
-            throw new Error(response.statusText);
+            // throw new Error(response.statusText);
         }
         return result;
         // return await response.json();

@@ -114,9 +114,13 @@ export class AuthUtils {
 
     public static async updateRefreshToken(): Promise<boolean> {
         let result: boolean = false;
-        //что писать для refreshToken? какой тип данных возращает?
-        const refreshToken = this.getAuthInfo(this.refreshTokenKey);
-        if (refreshToken) {
+        const refreshToken: string | null | undefined | AuthInfoKeysParams = this.getAuthInfo(this.refreshTokenKey);
+        const accessToken: string | null | undefined | AuthInfoKeysParams = this.getAuthInfo(this.accessTokenKey);
+        // const accessToken: string | null = localStorage.getItem(AuthUtils.accessTokenKey);
+        // const refreshToken: string | null = localStorage.getItem(AuthUtils.refreshTokenKey);
+        console.log(refreshToken, accessToken);
+
+        if (accessToken && refreshToken) {
             const response: Response = await fetch(config.api + '/refresh', {
                 method: 'POST',
                 headers: {
@@ -127,22 +131,25 @@ export class AuthUtils {
             });
             if (response && response.status === 200) {
                 const tokens: RefreshResponseType | null = await response.json();
+
                 if (tokens && tokens.accessToken && tokens.refreshToken) {
                     this.setTokens(tokens.accessToken, tokens.refreshToken);
                     this.setAuthInfo(tokens.accessToken, tokens.refreshToken);
-                    // this.setAuthInfo(tokens.accessToken, tokens.refreshToken);
                     result = true;
-                    console.log(result)
+                    console.log(result);
+                    return result;
                 }
             }
         }
 
         if (!result) {
-            this.removeAuthInfo();
-            this.removeTokens();
-            location.href = '/';
-            return false;
+            console.log(result);
+            // this.removeAuthInfo();
+            // this.removeTokens();
+            // location.href = '/';
+            // return false;
         }
         return result;
+        // return result;
     }
 }
