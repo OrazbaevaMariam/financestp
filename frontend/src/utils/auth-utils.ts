@@ -137,19 +137,21 @@ export class AuthUtils {
                     this.setAuthInfo(tokens.accessToken, tokens.refreshToken);
                     result = true;
                     console.log(result);
-                    return result;
+                    return true;
+                    // return result;
                 }
             }
+
         }
+
 
         if (!result) {
             console.log(result);
-            // this.removeAuthInfo();
-            // this.removeTokens();
-            // location.href = '/';
-            // return false;
+            this.removeAuthInfo();
+            this.removeTokens();
+            location.href = '/';
+            return false;
         }
         return result;
-        // return result;
     }
 }

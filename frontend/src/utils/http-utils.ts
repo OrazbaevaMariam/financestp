@@ -66,13 +66,14 @@ export class HttpUtils {
                         //запрос повторно
                         return this.request(url, method, useAuth, body);
                     }
+
                     // else {
                     //     location.href = '/login';
                     //     // result.redirect = '/login';
                     // }
                 }
             }
-            // throw new Error(response.statusText);
+            throw new Error(response.statusText);
         }
         return result;
         // return await response.json();

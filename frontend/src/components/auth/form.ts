@@ -143,7 +143,7 @@ export class Form {
                         const passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat')?.element?.value;
 
                         try {
-                            const result: HttpResultType = await HttpUtils.request('/signup', HTTPMethodsEnum.POST, true, {
+                            const result: HttpResultType = await HttpUtils.request('/signup', HTTPMethodsEnum.POST, false, {
                                 name: name,
                                 lastName: lastName,
                                 email: email,
@@ -170,7 +170,7 @@ export class Form {
 
             try {
 
-                const result: HttpResultType = await HttpUtils.request('/login', 'POST', true, {
+                const result: HttpResultType = await HttpUtils.request('/login', 'POST', false, {
                     email: email,
                     password: password,
                     rememberMe: rememberMe
