@@ -5,7 +5,7 @@ import '@kurkle/color';
 class Animator {
     constructor(){
         this._request = null;
-        this._charts = new ();
+        this._charts = new Map();
         this._running = false;
         this._lastDate = undefined;
     }
@@ -256,7 +256,7 @@ class Animation {
 class Animations {
     constructor(chart, config){
         this._chart = chart;
-        this._properties = new ();
+        this._properties = new Map();
         this.configure(config);
     }
     configure(config) {
@@ -1819,7 +1819,7 @@ class DoughnutController extends DatasetController {
                         const data = chart.data;
                         if (data.labels.length && data.datasets.length) {
                             const { labels: { pointStyle , color  }  } = chart.legend.options;
-                            return data.labels.((label, i)=>{
+                            return data.labels.map((label, i)=>{
                                 const meta = chart.getDatasetMeta(0);
                                 const style = meta.controller.getStyle(i);
                                 return {
@@ -2181,7 +2181,7 @@ class PolarAreaController extends DatasetController {
                         const data = chart.data;
                         if (data.labels.length && data.datasets.length) {
                             const { labels: { pointStyle , color  }  } = chart.legend.options;
-                            return data.labels.((label, i)=>{
+                            return data.labels.map((label, i)=>{
                                 const meta = chart.getDatasetMeta(0);
                                 const style = meta.controller.getStyle(i);
                                 return {
