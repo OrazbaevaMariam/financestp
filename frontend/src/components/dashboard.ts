@@ -28,6 +28,9 @@ export class Dashboard {
    private dateEnd: HTMLInputElement | null;
    private ChartIncome: ChartItem;
     private ChartExpense: ChartItem;
+    private operationsIncome: boolean[] | undefined;
+    private operationsExpense: boolean[] | undefined;
+
 
 
 
@@ -41,8 +44,9 @@ export class Dashboard {
         this.intervalFilter = document.getElementById('interval-filter');
         this.dateStart = document.getElementById('date-start') as HTMLInputElement;
         this.dateEnd = document.getElementById('date-end') as HTMLInputElement;
-        this.ChartIncome = document.getElementById('myChartIncome') as ChartItem;;
-        this.ChartExpense = document.getElementById('myChartExpense') as ChartItem;;
+        this.ChartIncome = document.getElementById('myChartIncome') as ChartItem;
+        this.ChartExpense = document.getElementById('myChartExpense') as ChartItem;
+
 
         this.todayFilter?.addEventListener('click', () => this.init());
         this.allDatesFilter?.addEventListener('click', () => this.allDatesF());
@@ -95,7 +99,7 @@ export class Dashboard {
             const result: HttpResultType = await HttpUtils.request('/operations');
             if (result && result.response as CreateOperationType) {
                 this.operations = result.response as CreateOperationType[];
-                // console.log(Object.values(this.operations));
+                console.log(Object.values(this.operations));
 
             }
             if (result && result.error && result.response as DefaultResponseType) {
@@ -115,6 +119,7 @@ export class Dashboard {
             })}
             return obj;
         });
+
         this.dataExpenses = (this.categoriesExpense)?.map((category: CategoriesExpenseType) => {
             const obj = {...category, amount: 0};
             if (Array.isArray(this.operations)) {
@@ -129,7 +134,7 @@ export class Dashboard {
 
     }
 
-    async weekF() {
+    private async weekF(): Promise<void> {
         this.destroyCharts();
         this.weekFilter?.classList.add('active');
         this.allDatesFilter?.classList.remove('active');
@@ -138,7 +143,7 @@ export class Dashboard {
         this.intervalFilter?.classList.remove('active');
         this.todayFilter?.classList.remove('active');
         try {
-            const result: ResultsFilter = await OperationsService.getOperationsFilter('', this.dateStart as HTMLInputElement, this.dateEnd as HTMLInputElement, 'week');
+            const result: ResultsFilter = await OperationsService.getOperationsFilter('', (this.dateStart as HTMLInputElement), (this.dateEnd as HTMLInputElement), 'week');
 
             if (result && result.response as ResultsFilter) {
                 this.operations = result.response as ResultsFilter[];
@@ -156,7 +161,7 @@ export class Dashboard {
 
             if (result && result.response as CategoriesIncomeType) {
                 this.categoriesIncome = result.response as CategoriesIncomeType[];
-                console.log(Object.values(this.categoriesIncome));
+                // console.log(Object.values(this.categoriesIncome));
             }
             if (result && result.error && result.response as DefaultResponseType) {
                 throw new Error(result.response.message);
@@ -200,7 +205,7 @@ export class Dashboard {
 
     }
 
-    async monthF() {
+  private  async monthF(): Promise<void> {
         this.destroyCharts();
         this.monthFilter?.classList.add('active');
         this.yearFilter?.classList.remove('active');
@@ -268,7 +273,7 @@ export class Dashboard {
 
     }
 
-    async yearF() {
+   private async yearF(): Promise<void> {
         this.destroyCharts();
         this.yearFilter?.classList.add('active');
         this.intervalFilter?.classList.remove('active');
@@ -335,7 +340,7 @@ export class Dashboard {
 
     }
 
-    async allDatesF() {
+   private async allDatesF(): Promise<void> {
         this.destroyCharts();
         this.allDatesFilter?.classList.add('active');
         this.monthFilter?.classList.remove('active');
@@ -470,24 +475,31 @@ export class Dashboard {
         await this.getPie();
 
     }
-    getPie() {
+
+   private getPie(): void {
+         this.operationsIncome = (this.operations as CreateOperationType[])?.map((item: CreateOperationType)=> item.type === "income")
+         this.operationsExpense = (this.operations as CreateOperationType[])?.map((item: CreateOperationType)=> item.type === "expense")
         const dataIncome = {
             labels: (this.dataIncomes)?.map((item: CategoriesIncomeType): string => item.title),
             datasets: [{
                 label: '# of Votes',
-                data: (this.operations as CreateOperationType[])?.map((item: CreateOperationType) => item.amount),
+                data: (this.operationsIncome as unknown as CreateOperationType[])?.map((item: CreateOperationType) =>  item.amount),
+                // data: (this.operations as CreateOperationType[])?.map((item: CreateOperationType) =>  item.amount),
                 borderWidth: 1
             }]
         };
 
         const dataExpense = {
-            labels: (this.dataExpenses)?.map((item: CategoriesExpenseType) => item.title),
+            labels: (this.dataIncomes)?.map((item: CategoriesExpenseType) => item.title),
             datasets: [{
                 label: '# of Votes',
-                data: (this.operations as CreateOperationType[])?.map((item: CreateOperationType) => item.amount),
+                data: (this.operationsExpense as unknown as CreateOperationType[])?.map((item: CreateOperationType) => item.amount),
                 borderWidth: 1
             }]
         };
+        console.log(this.operationsExpense);
+
+
 
         const options = {
             responsive: true,
@@ -531,7 +543,7 @@ export class Dashboard {
 
     }
 
-    destroyCharts() {
+   private destroyCharts(): void {
         if (this.myChartIncome){
             this.myChartIncome.destroy();
         }

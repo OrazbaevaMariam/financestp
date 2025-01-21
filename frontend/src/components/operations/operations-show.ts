@@ -72,8 +72,9 @@ export class OperationsList {
             }
 
 
+
             const operationCategory: HTMLTableCellElement = document.createElement('td');
-            operationCategory.innerText = String(operation.category_id);
+            operationCategory.innerText = String(operation.category);
 
             const operationAmount: HTMLTableCellElement = document.createElement('td');
             operationAmount.innerText = operation.amount + '$';
@@ -136,7 +137,7 @@ export class OperationsList {
        this.weekFilter?.classList.remove('active');
         try {
             const result: HttpResultType = await HttpUtils.request('/operations');
-            if (result && result.response as CreateOperationType[]) {
+            if (result && result.response as CreateOperationType) {
                 this.operations = result.response as CreateOperationType[];
                 this.showOperations()
 
@@ -160,8 +161,12 @@ export class OperationsList {
         this.todayFilter?.classList.remove('active');
         try {
             const result: HttpResultType = await OperationsService.getOperationsFilter('', (this.dateStart as HTMLInputElement) , (this.dateEnd as HTMLInputElement), 'week');
+            console.log(result)
+
             if (result && result.response as CreateOperationType[]) {
                 this.operations = result.response as CreateOperationType[];
+                console.log(this.operations)
+
                 this.showOperations()
 
             }
@@ -206,7 +211,6 @@ export class OperationsList {
         this.allDatesFilter?.classList.remove('active');
         try {
             const result: ResultsFilter = await OperationsService.getOperationsFilter('', (this.dateStart as HTMLInputElement), (this.dateEnd as HTMLInputElement), 'month');
-            console.log(result);
             if (result && result.response as CreateOperationType[]) {
 
                 this.operations = result.response as CreateOperationType[];
