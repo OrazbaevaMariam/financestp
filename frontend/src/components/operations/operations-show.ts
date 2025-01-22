@@ -29,6 +29,13 @@ export class OperationsList {
         this.dateStart = document.getElementById('date-start') as HTMLInputElement;
         this.dateEnd = document.getElementById('date-end') as HTMLInputElement;
 
+        this.todayFilter = document.getElementById('todayFilter');
+        this.weekFilter = document.getElementById('weekFilter');
+        this.monthFilter = document.getElementById('monthFilter');
+        this.yearFilter = document.getElementById('yearFilter');
+        this.allDatesFilter = document.getElementById('allDatesFilter');
+        this.intervalFilter = document.getElementById('intervalFilter');
+
         this.allDatesFilter?.addEventListener('click', () => this.allDatesFilterF());
         this.todayFilter?.addEventListener('click', () => this.init());
         this.weekFilter?.addEventListener('click', () => this.weekFilterF());

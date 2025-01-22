@@ -95,8 +95,8 @@ export class Dashboard {
             console.log(error)
         }
         try {
-            // const result = await HttpUtils.request('/operations?period=all');
-            const result: HttpResultType = await HttpUtils.request('/operations');
+            const result = await HttpUtils.request('/operations?period=all');
+            // const result: HttpResultType = await HttpUtils.request('/operations');
             if (result && result.response as CreateOperationType) {
                 this.operations = result.response as CreateOperationType[];
                 console.log(Object.values(this.operations));
@@ -477,8 +477,8 @@ export class Dashboard {
     }
 
    private getPie(): void {
-         this.operationsIncome = (this.operations as CreateOperationType[])?.map((item: CreateOperationType)=> item.type === "income")
-         this.operationsExpense = (this.operations as CreateOperationType[])?.map((item: CreateOperationType)=> item.type === "expense")
+         this.operationsIncome = (this.operations as []).filter((item: CreateOperationType)=> item.type === "income")
+         this.operationsExpense = (this.operations as []).filter((item: CreateOperationType)=> item.type === "expense")
         const dataIncome = {
             labels: (this.dataIncomes)?.map((item: CategoriesIncomeType): string => item.title),
             datasets: [{
@@ -490,7 +490,7 @@ export class Dashboard {
         };
 
         const dataExpense = {
-            labels: (this.dataIncomes)?.map((item: CategoriesExpenseType) => item.title),
+            labels: (this.dataExpenses)?.map((item: CategoriesExpenseType) => item.title),
             datasets: [{
                 label: '# of Votes',
                 data: (this.operationsExpense as unknown as CreateOperationType[])?.map((item: CreateOperationType) => item.amount),
